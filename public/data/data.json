@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "make": "Toyota",
+        "model": "Corolla",
+        "style": "Sedan",
+        "capacityPeople": 5,
+        "capacityLuggage": 4,
+        "transmission": "Automatic",
+        "image": "./image/corolla.avif",
+        "price": "50.89"
+    },
+    {
+        "id": 2,
+        "make": "Honda",
+        "model": "Civic",
+        "style": "Sedan",
+        "capacityPeople": 5,
+        "capacityLuggage": 4,
+        "transmission": "Automatic",
+        "image": "./image/corolla.avif",
+        "price": "60.98"
+    }
+]

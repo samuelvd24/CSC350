@@ -64,6 +64,10 @@ a h2:hover {
     border-bottom:  2px solid #ffc300;
 }
 
+.card > p {
+    font-size: 1.75rem;
+}
+
 footer p {
     font-size: .8rem;
 }
