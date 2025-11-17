@@ -1,48 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+<?php
+session_start();
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+// make sure this path is correct
+require __DIR__ . '/db.php';
 
-    <title>QRS Car Rental</title>
-</head>
-<body>
-    <header>
-        <a href="index.php"><h2>QRS Car Rentals</h2></a>
-        <nav>
-            <ul>
-                <li><a href="browse.php">Browse</a></li>
-                <li><a href="signup.php">Sign Up</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main class="signup-main">
-        <img class="signup-main-img" src="image/mercedes.jpg" alt="Mercedes bumper">
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // 1. Get form data
+    $first_name = trim($_POST['first_name'] ?? '');
+    $last_name  = trim($_POST['last_name'] ?? '');
+    $email      = strtolower(trim($_POST['email'] ?? ''));
+    $password   = $_POST['password'] ?? '';
 
-    </main>
-    <footer>
+    // 2. Basic validation
+    if ($first_name === '' || $last_name === '' || $email === '' || $password === '') {
+        die('All fields are required.');
+    }
 
-        <div class="footer-contact">
-            <div class="footer-container">
-                <h5>CONTACT</h5>
-                <p><a href="">Example@email.com</a></p>
-            </div>
-            <div class="footer-container">
-                <h5>FOLLOW</h5>
-                <div class="footer-social-media">
-                    <a href=""><img class="footer-icon" src="image/instagram-brands-solid.svg" alt="instagram icon"></a>
-                    <a href=""><img class="footer-icon" src="image/twitter-brands-solid.svg" alt="twitter icon"></a>
-                    
-                </div>
-            </div>
-        </div>
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die('Invalid email format.');
+    }
 
-        <p class="footer-p">&copy;2025 QRS Rental System. All rights reserved</p>
-    </footer>
-</body>
-</html>
+    // 3. Hash password
+    $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+    // 4. Insert into database using PDO ($pdo)
+    try {
+        // ❗ If your `users` table does NOT yet have first_name/last_name,
+        // run the ALTER TABLE we talked about, OR remove them from this query.
+        $sql = "INSERT INTO users (first_name, last_name, email, password_hash)
+                VALUES (:first_name, :last_name, :email, :password_hash)";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':first_name'    => $first_name,
+            ':last_name'     => $last_name,
+            ':email'         => $email,
+            ':password_hash' => $password_hash,
+        ]);
+
+        // On success, send user to login page
+        header('Location: login.html?signup=success');
+        exit;
+    } catch (PDOException $e) {
+        // Duplicate email (unique constraint)
+        if ($e->getCode() === '23000') {
+            die('This email is already registered. <a href="login.html">Login here</a>.');
+        }
+        // For debugging you can temporarily echo the error:
+        // echo $e->getMessage();
+        die('Something went wrong while creating your account.');
+    }
+}

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2025 at 08:13 PM
+-- Generation Time: Nov 17, 2025 at 04:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,10 +46,18 @@ CREATE TABLE `cars` (
 --
 
 INSERT INTO `cars` (`id`, `make`, `model`, `year`, `seats`, `luggage_capacity`, `transmission`, `daily_rate`, `image_url`, `available`, `created_at`) VALUES
-(1, 'Toyota', 'Corolla', 2022, 5, 4, 'automatic', 50.87, 'image/corolla.avif', 1, '2025-11-13 15:05:15'),
-(2, 'Honda', 'Civic', 2021, 5, 4, 'automatic', 48.25, 'image/corolla.avif', 1, '2025-11-13 15:05:15'),
-(3, 'Tesla', 'Model 3', 2023, 5, 4, 'automatic', 99.99, 'image/corolla.avif', 1, '2025-11-13 15:05:15'),
-(4, 'Ford', 'Escape', 2020, 5, 4, 'automatic', 55.00, 'image/corolla.avif', 0, '2025-11-13 15:05:15');
+(1, 'Toyota', 'Corolla', 2023, 5, 3, 'automatic', 49.99, 'image/corolla.avif', 1, '2025-11-13 15:05:15'),
+(2, 'Honda', 'Civic', 2022, 5, 3, 'automatic', 48.99, 'image/civic.png', 1, '2025-11-13 15:05:15'),
+(3, 'Tesla', 'Model 3', 2023, 5, 3, 'automatic', 109.99, 'image/tesla.png', 1, '2025-11-13 15:05:15'),
+(4, 'Ford', 'Escape', 2021, 5, 4, 'automatic', 64.99, 'image/ford.png', 1, '2025-11-13 15:05:15'),
+(5, 'Toyota', 'Supra', 2022, 2, 2, 'manual', 99.99, 'image/supra.png', 1, '2025-11-13 20:05:15'),
+(6, 'Hyundai', 'Elantra', 2023, 5, 3, 'automatic', 46.99, 'image/hyundai.png', 1, '2025-11-16 05:52:12'),
+(7, 'BMW', '3 Series', 2022, 5, 3, 'automatic', 94.99, 'image/bmw.png', 1, '2025-11-16 05:52:12'),
+(8, 'Kia', 'Sorento', 2021, 7, 4, 'automatic', 79.99, 'image/kia.png', 1, '2025-11-16 05:52:12'),
+(9, 'Subaru', 'Outback', 2022, 5, 5, 'automatic', 69.99, 'image/subaru.png', 1, '2025-11-16 05:52:12'),
+(10, 'Mazda', 'MX-5 Miata', 2023, 2, 1, 'manual', 84.99, 'image/mazda.png', 1, '2025-11-16 05:52:12'),
+(11, 'Nissan', 'Altima', 2023, 5, 4, 'automatic', 54.99, 'image/nissan.png', 1, '2025-11-16 05:53:20'),
+(12, 'Chevrolet', 'Tahoe', 2022, 7, 5, 'automatic', 104.99, 'image/tahoe.png', 1, '2025-11-16 05:53:20');
 
 -- --------------------------------------------------------
 
@@ -67,6 +75,13 @@ CREATE TABLE `rentals` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ;
 
+--
+-- Dumping data for table `rentals`
+--
+
+INSERT INTO `rentals` (`id`, `user_id`, `car_id`, `start_date`, `end_date`, `status`, `created_at`) VALUES
+(3, 2, 5, '2025-11-23', '2025-11-24', 'pending', '2025-11-17 06:33:02');
+
 -- --------------------------------------------------------
 
 --
@@ -75,11 +90,20 @@ CREATE TABLE `rentals` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
   `role` enum('user','admin') DEFAULT 'user',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password_hash`, `role`, `created_at`) VALUES
+(2, 'Samuel', 'Dewangga', 'samuelvalentinodewangga@gmail.com', '$2y$10$DvYzWwGh8E1zoRTmHgv6.O81Vhxd/UFRxNliDhtanUQFbPJbWMEtG', 'user', '2025-11-17 05:22:11');
 
 --
 -- Indexes for dumped tables
@@ -96,8 +120,8 @@ ALTER TABLE `cars`
 --
 ALTER TABLE `rentals`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `idx_rentals_car_dates` (`car_id`,`start_date`,`end_date`);
+  ADD KEY `idx_rentals_car_dates` (`car_id`,`start_date`,`end_date`),
+  ADD KEY `fk_rentals_user` (`user_id`);
 
 --
 -- Indexes for table `users`
@@ -114,7 +138,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `rentals`
@@ -126,7 +150,7 @@ ALTER TABLE `rentals`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -136,6 +160,8 @@ ALTER TABLE `users`
 -- Constraints for table `rentals`
 --
 ALTER TABLE `rentals`
+  ADD CONSTRAINT `fk_rentals_car` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_rentals_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `rentals_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `rentals_ibfk_2` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`);
 COMMIT;
