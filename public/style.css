@@ -10,13 +10,12 @@ body {
     flex-direction: column;
     justify-content: space-between;
     text-align: center;
-    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+    background: #0e0e0e;
 }
 
-/****************** 
+/******************
     TYPOGRAPHY
 ******************/
-
 h1 {
     font-family: "Montserrat";
     font-size: 3rem;
@@ -24,7 +23,6 @@ h1 {
 }
 
 header h2 {
-    color: black;
     font-size: 1.25rem;
     letter-spacing: 1.2px;
 }
@@ -34,17 +32,18 @@ header a {
     color: #ffc300;
 }
 
-h2{
+h2 {
     font-size: 1.7rem;
     color: white;
     font-family: "Montserrat";
 }
 
 a {
-    font-family:  "Montserrat";
+    font-family: "Montserrat";
     font-weight: 600;
     font-size: .9rem;
     letter-spacing: 1.25px;
+    text-decoration: none;
 }
 
 li a:hover {
@@ -60,6 +59,7 @@ li a:active {
     outline: 1px solid #ffc300;
     outline-offset: 3px;
 }
+
 a h2:hover {
     border-bottom:  2px solid #ffc300;
 }
@@ -68,10 +68,9 @@ footer p {
     font-size: .8rem;
 }
 
-/****************** 
+/******************
        HEADER
 ******************/
-
 header {
     display: flex;
     justify-content: space-between;
@@ -95,17 +94,10 @@ nav {
     margin-right: 2em;
 }
 
-a {
-    text-decoration: none;
-}
-
-
-/****************** 
-        MAIN   
+/******************
+        MAIN
 ******************/
-
 .index-main {
-    /* height: 100vh; */
     background: #0e0e0e;
     z-index: -2;
     display: flex;
@@ -115,15 +107,14 @@ a {
 
 main.hero {
     z-index: -1;
-    background-image: 
+    background-image:
         linear-gradient(
             rgba(0, 0, 0, 0.1),
             rgba(0, 0, 0, 0.6),
             rgba(0, 0, 0, 0.6),
             rgba(0, 0, 0, 0.1)
         ),
-        url('./image/hero.jpg')
-        ;
+        url('./image/hero.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -132,20 +123,16 @@ main.hero {
     margin: 2em auto;
 }
 
-
 @media (max-width: 450px) {
     .main-title {
         left: 20px;
     }
-
     h1 {
-        font-family: "Montserrat";
         font-size: 2rem;
-        color: #fff;
     }
 }
 
-/****************** 
+/******************
       BROWSE
 ******************/
 .gradient {
@@ -168,23 +155,93 @@ main.hero {
     );
 }
 
+/* layout for browse.php (and rent card) */
 .browse-main {
+    background: #0e0e0e;
     width: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1em;
     margin: 2em auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.5em;
 }
 
+/* Filter form – vertical, centered */
+.filter-form {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0 auto 2em auto;
+    padding: 1.2em 1.5em;
+    border-radius: 12px;
+    background: #141414;
+
+    /* 3-column grid */
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9em 1.2em;
+    align-items: end;
+}
+
+
+/* Inputs, selects and labels in filter form */
+.filter-form input,
+.filter-form select {
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.9rem;
+    padding: 0.55em 0.75em;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #0e0e0e;
+    color: #ffffff;
+    width: 100%;
+}
+
+.filter-form input::placeholder {
+    color: #bbbbbb;
+}
+
+.filter-form label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.8rem;
+    color: #ffffff;
+    gap: 0.25em;
+    width: 100%;
+}
+
+/* Filter button */
+.filter-form button {
+    padding: 0.7em 1.2em;
+    border-radius: 6px;
+    border: none;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: #ffc300;
+    color: #0e0e0e;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.filter-form button:hover {
+    background-color: #e0a800;
+    color: #ffffff;
+}
+
+/* Card layout */
 .card {
-    min-width: 450px;
+    min-width: 280px;
+    max-width: 450px;
     border-radius: 10px;
     color: #ffffff;
     text-align: left;
     padding: 1em;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -201,7 +258,8 @@ main.hero {
 }
 
 .card-img-container img {
-    width: 250px;
+    width: 100%;
+    max-width: 260px;
 }
 
 .icon-container {
@@ -211,30 +269,123 @@ main.hero {
 
 .card-details {
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 3px 15px;
     border-radius: 1000px;
-    background-color: rgba(0, 0, 0, 0.6);  
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
-/****************** 
-      SIGNUP
+/******************
+   BROWSE BUTTONS
 ******************/
+.card button {
+    width: 100%;
+    padding: 0.75em;
+    margin-top: 1em;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #0e0e0e;
+    background: #ffc300;
+}
 
-.signup-main-img {
+.card button:hover {
+    background: #e0a800;
+    color: #fff;
+}
+
+.card button:disabled {
+    background: #555;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.card a button {
+    background: #ff7f50;
+    color: #fff;
+}
+
+.card a button:hover {
+    background: #ff4500;
+    color: #fff;
+}
+
+/******************
+  BROWSE RESPONSIVE
+******************/
+@media (max-width: 768px) {
+    .card {
+        min-width: 100%;
+    }
+}
+
+/******************
+      SIGNUP & LOGIN
+******************/
+.signup-main,
+.login-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 90%;
+    margin: 2em auto;
+}
+
+.signup-main-img,
+.login-main-img {
     width: 100%;
     max-width: 450px;
     height: auto;
     border-radius: 12px;
-    /* clip-path: circle(50%); */
+    margin-bottom: 1.5em;
 }
 
-/****************** 
+.signup-main form,
+.login-main form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75em;
+}
+
+.signup-main form input,
+.login-main form input {
+    width: 30%;
+    padding: 0.6em;
+    margin: 0.5em 0 1em 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.signup-main form button,
+.login-main form button {
+    width: 30%;
+    padding: 0.75em;
+    margin-top: 1em;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #ffc300;
+    color: #0e0e0e;
+}
+
+.signup-main form button:hover,
+.login-main form button:hover {
+    background-color: #e0a800;
+    color: #fff;
+}
+
+/******************
        FOOTER
 ******************/
-
 footer {
     padding: 1em;
     color: #fff;
@@ -242,6 +393,7 @@ footer {
     font: 1.2rem;
     letter-spacing: 1px;
 }
+
 .footer-p {
     padding-bottom: 1em;
 }
@@ -255,8 +407,7 @@ footer a {
     margin: 1em auto;
     padding: 1em 3em;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
 }
 

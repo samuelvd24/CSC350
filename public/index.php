@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,9 +23,14 @@
         
         <nav>
             <ul>
-                <!-- <li><a href="/index.html">Home</a></li> -->
+                <!-- <li><a href="/index.php">Home</a></li> -->
                 <li><a href="browse.php">Browse</a></li>
-                <li><a href="signup.php">Sign Up</a></li>
+                <?php if(isset($_SESSION['user_id'])): ?>
+                    <li><a href="logout.php">Logout</a></li>
+                <?php else: ?>
+                    <li><a href="signup.html">Sign Up</a></li>
+                    <li><a href="login.html">Login</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>
@@ -41,8 +49,8 @@
             <div class="footer-container">
                 <h5>FOLLOW</h5>
                 <div class="footer-social-media">
-                    <a href=""><img class="footer-icon" src="image/instagram-brands-solid.svg" alt="instagram icon"></a>
-                    <a href=""><img class="footer-icon" src="image/twitter-brands-solid.svg" alt="twitter icon"></a>
+                    <a href=""><img class="footer-icon" src="./image/instagram-brands-solid.svg" alt="instagram icon"></a>
+                    <a href=""><img class="footer-icon" src="./image/twitter-brands-solid.svg" alt="twitter icon"></a>
                     
                 </div>
             </div>
