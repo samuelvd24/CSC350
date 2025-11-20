@@ -220,6 +220,7 @@ $cars = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $rate     = number_format($car['daily_rate'], 2);
             $img      = !empty($car['image_url']) ? $car['image_url'] : "image/corolla.avif";
         ?>
+        
         <div class="card gradient">
             <div class="card-top">
                 <h3 class="card-title"><?= $title ?></h3>
