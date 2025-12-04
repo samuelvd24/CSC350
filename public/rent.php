@@ -2,7 +2,7 @@
 session_start();
 require __DIR__ . '/db.php';
 
-// User must be logged in
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.html?error=login_required');
     exit;
@@ -14,34 +14,29 @@ $success          = '';
 $start_input_date = '';
 $end_input_date   = '';
 
-// If the form was submitted, handle the booking (POST)
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $car_id     = (int)($_POST['car_id'] ?? 0);
     $start_date = $_POST['start_date'] ?? '';
     $end_date   = $_POST['end_date'] ?? '';
 
-    // keep values for re-display
     $start_input_date = $start_date;
     $end_input_date   = $end_date;
 
     if ($car_id <= 0 || $start_date === '' || $end_date === '') {
         $error = 'Please fill in all fields.';
     } else {
-        // basic date validation
+    
         $start = date_create($start_date);
         $end   = date_create($end_date);
 
         if (!$start || !$end) {
             $error = 'Invalid dates.';
         } elseif ($start >= $end) {
-            // same rule as browse.php: end must be after start
+            
             $error = 'End date must be after start date.';
         } else {
-            // 1) Check for overlapping rentals for this car
-            //    Same overlap rule as browse.php:
-            //    existing overlaps new when NOT (
-            //        existing.end_date <= new_start OR existing.start_date >= new_end
-            //    )
+            
             $sql = "
                 SELECT COUNT(*) AS cnt
                 FROM rentals
@@ -63,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($row && $row['cnt'] > 0) {
                 $error = 'Sorry, this car is already booked for those dates.';
             } else {
-                // 2) Insert rental
+        
                 $ins = $pdo->prepare("
                     INSERT INTO rentals (user_id, car_id, start_date, end_date, status)
                     VALUES (:user_id, :car_id, :start_date, :end_date, 'pending')
@@ -80,18 +75,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Load car info again for redisplay
     $car_id_for_display = $car_id;
 } else {
-    // Initial GET – coming from browse.php with ?car_id=...
+    
     $car_id_for_display = (int)($_GET['car_id'] ?? 0);
 
-    // Optional: prefill dates if passed via GET
     $start_input_date = $_GET['start_date'] ?? '';
     $end_input_date   = $_GET['end_date'] ?? '';
 }
 
-// Fetch the car being rented
 $carStmt = $pdo->prepare("SELECT * FROM cars WHERE id = :id AND available = 1");
 $carStmt->execute([':id' => $car_id_for_display]);
 $car = $carStmt->fetch();

@@ -13,7 +13,7 @@ $max_rate     = $_GET['max_rate']         ?? '';
 $start_date   = $_GET['start_date']       ?? '';
 $end_date     = $_GET['end_date']         ?? '';
 
-// Main query: cars + "is_available_today" flag
+
 $sql = "SELECT c.*,
                NOT EXISTS (
                    SELECT 1
@@ -26,7 +26,7 @@ $sql = "SELECT c.*,
         WHERE 1=1";
 $params = [];
 
-// search by name (make + model)
+
 if ($search !== '') {
     $sql .= " AND (CONCAT(c.make, ' ', c.model) LIKE :search
               OR c.make LIKE :search
@@ -34,13 +34,13 @@ if ($search !== '') {
     $params[':search'] = '%'.$search.'%';
 }
 
-// model
+
 if ($model !== '') {
     $sql .= " AND c.model LIKE :model";
     $params[':model'] = '%'.$model.'%';
 }
 
-// year
+
 if ($min_year !== '') {
     $sql .= " AND c.year >= :min_year";
     $params[':min_year'] = (int)$min_year;
@@ -50,31 +50,31 @@ if ($max_year !== '') {
     $params[':max_year'] = (int)$max_year;
 }
 
-// seats
+
 if ($min_seats !== '') {
     $sql .= " AND c.seats >= :min_seats";
     $params[':min_seats'] = (int)$min_seats;
 }
 
-// luggage
+
 if ($min_luggage !== '') {
     $sql .= " AND c.luggage_capacity >= :min_luggage";
     $params[':min_luggage'] = (int)$min_luggage;
 }
 
-// transmission
+
 if ($transmission !== '') {
     $sql .= " AND c.transmission = :transmission";
     $params[':transmission'] = $transmission;
 }
 
-// max daily rate
+
 if ($max_rate !== '') {
     $sql .= " AND c.daily_rate <= :max_rate";
     $params[':max_rate'] = (float)$max_rate;
 }
 
-// availability using rentals table, for selected date range
+
 if ($start_date !== '' && $end_date !== '') {
     if ($start_date > $end_date) {
         $tmp        = $start_date;
@@ -97,7 +97,7 @@ if ($start_date !== '' && $end_date !== '') {
     $params[':end_date']   = $end_date;
 }
 
-// only generally available cars
+
 $sql .= " AND c.available = 1
           ORDER BY c.daily_rate ASC";
 
@@ -119,18 +119,28 @@ $cars = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
 <header>
   <a href="index.php"><h2>QRS Car Rentals</h2></a>
+
+  <?php if (isset($_SESSION['full_name'])): ?>
+      <p style="color:#ffc300; font-size:1rem; margin-left:1rem; font-weight:600;">
+          Welcome, <?= htmlspecialchars($_SESSION['full_name']) ?>!
+      </p>
+  <?php endif; ?>
+
   <nav>
     <ul>
         <?php if (isset($_SESSION['user_id'])): ?>
         <li><a href="browse.php">Browse</a></li>
+        <li><a href="my_bookings.php">My Bookings</a></li>
+        <li><a href="profile.php">Profile</a></li>
         <li><a href="logout.php">Logout</a></li>
         <?php else: ?>
-        <li><a href="login.html">Login</a></li>
-        <li><a href="signup.html">Sign Up</a></li>
+        <li><a href="login.php">Login</a></li>
+        <li><a href="signup.php">Sign Up</a></li>
         <?php endif; ?>
     </ul>
   </nav>
 </header>
+
 
 <main class="browse-main">
 
@@ -248,10 +258,7 @@ $cars = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <p>$<?= $rate ?> /day</p>
 
             <?php
-            // Button logic:
-            // - If not available today       -> "Not Available Today"
-            // - Else if not logged in        -> "Login to Rent"
-            // - Else                         -> "Rent Now"
+            
             ?>
             <?php if (!$car['is_available_today']): ?>
                 <button type="button" disabled>Not Available Today</button>
