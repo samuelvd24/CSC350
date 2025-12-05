@@ -410,3 +410,58 @@ footer a {
 .footer-icon {
     width: 18px;
 }
+
+/* Profile page */
+.profile-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    background: #111;
+    padding: 2rem;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.profile-container h1 {
+    margin-bottom: 1.5rem;
+}
+
+.profile-container label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.profile-container input {
+    width: 100%;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.profile-container button {
+    padding: 0.75rem 1.2rem;
+    background: #ffc300;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.profile-container button:hover {
+    background: #e0a800;
+}
+
+.message {
+    margin-bottom: 1rem;
+    font-weight: bold;
+    color: #0f0;
+}
+
+.error {
+    margin-bottom: 1rem;
+    font-weight: bold;
+    color: #f33;
+}

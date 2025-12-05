@@ -134,8 +134,8 @@ $cars = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <li><a href="profile.php">Profile</a></li>
         <li><a href="logout.php">Logout</a></li>
         <?php else: ?>
-        <li><a href="login.php">Login</a></li>
-        <li><a href="signup.php">Sign Up</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
         <?php endif; ?>
     </ul>
   </nav>
