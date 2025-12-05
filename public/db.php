@@ -1,6 +1,6 @@
 <?php
 // db.php
-$DB_HOST = '127.0.0.1';   // or your server host
+$DB_HOST = '127.0.0.1';   
 $DB_NAME = 'car_rental';
 $DB_USER = 'root';
 $DB_PASS = '';
