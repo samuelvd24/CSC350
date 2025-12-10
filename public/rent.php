@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':end_date'   => $end_date,
                 ]);
 
-                $success = 'Your booking has been created!';
+                $success = 'Your booking has been created! Your total will be: $';
             }
         }
     }
