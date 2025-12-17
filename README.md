@@ -13,7 +13,7 @@
 
 ### Tech Stack
 
-- Frontend: HTML, CSS, PHP, Javascript
+- Frontend: HTML, CSS, PHP
 - Backend: PHP,
 - Database: MySQL
 - Version control through Github
